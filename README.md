@@ -269,13 +269,13 @@ header['cred'] = 32位cred
     "type": "A",
     "msg": "OK",
     "data": {
-        "hgId": "1*********6",# 鹰角账号id 注意，该部分会完全显示
-        "phone": "199****9999",# 手机号 注意，打码部分不会显示
-        "email": null, # 绑定邮箱
-        "identityNum": "1111**********1111", # 身份证信息 注意，中间打码部分不会显示
-        "identityName": "探**",# 姓名信息 注意，只会显示姓氏
-        "isMinor": false, # 是否未成年
-        "isLatestUserAgreement": true # 用户是否已同意了最新的用户协议
+        "hgId": "1*********6",// 鹰角账号id 注意，该部分会完全显示
+        "phone": "199****9999",// 手机号 注意，打码部分不会显示
+        "email": null, // 绑定邮箱
+        "identityNum": "1111**********1111", // 身份证信息 注意，中间打码部分不会显示
+        "identityName": "探**",// 姓名信息 注意，只会显示姓氏
+        "isMinor": false, // 是否未成年
+        "isLatestUserAgreement": true // 用户是否已同意了最新的用户协议
     }
 }
 ```
