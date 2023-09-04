@@ -1,50 +1,52 @@
 # Skland_API
 森空岛API接口合集以及文档示例
 
+明日方舟工具箱 / 罗德岛移动终端 开发组
+
 ## 说明
 
 该文档中的API接口均基于鹰角网络森空岛APP中的游戏数据页面。
 
-根据APP内显示数据 本文档可能包含的 API 有：
-```
----Header---
-入职日 
-游戏ID
-作战进度
-家具保有数
-雇佣干员数
+根据APP内显示数据 本文档可能包含的 API 以及json数据路径
 
----助战干员---
-助战干员
+更多实现以及可能请关注 [API数据解读](##API数据解读) 部分
 
----实时数据---
-理智 & 恢复时间
-公开招募进度
-公招刷新
-训练室状态
-每周报酬合成玉进度 & 刷新时间
-每日任务进度 & 刷新时间
-每周任务进度 & 刷新时间
-数据增补仪进度 & 刷新时间
-数据增补条进度 & 刷新时间
----我的干员---
-干员数据
-时装数据
+| 数据项                        | 数据值                                        |
+| ----------------------------- | --------------------------------------------- |
+| **---Header---**              |                                               |
+| 入职日期时间戳                | data.status.registerTs                        |
+| 游戏昵称                      | data.status.name                              |
+| 作战进度                      | data.status.mainStageProgress                 |
+| 家具保有数                    | data.building.furniture                       |
+| 雇佣干员数                    | 好像没有直接返回，像是遍历 data.chars 数组    |
+| **助战干员**                  |                                               |
+| 助战干员                      | data.assistChars                              |
+| **---实时数据---**            |                                               |
+| 理智 & 恢复时间               | data.status.ap.current /.completeRecoveryTime |
+| 公开招募进度                  | data.building.hire.completeWorkTime           |
+| 公招刷新                      | data.building.hire.refreshCount               |
+| 训练室状态                    | data.building.training.trainee                |
+| 每周报酬合成玉进度 & 刷新时间 | data.campaign.reward                          |
+| 每日任务进度 & 刷新时间       | data.routine.daily                            |
+| 每周任务进度 & 刷新时间       | data.routine.weekly                           |
+| 数据增补仪进度 & 刷新时间     | data.tower.reward.lowerItem                   |
+| 数据增补条进度 & 刷新时间     | data.tower.reward.higherItem                  |
+| **---我的干员---**            |                                               |
+| 干员数据                      | data.chars                                    |
+| 时装数据                      | data.skins                                    |
+| **---基建数据---**            |                                               |
+| 订单进度 \| 贸易站数据        | data.building.tradings                        |
+| 制造进度 \| 制造站数据        | data.building.manufactures                    |
+| 休息进度 \| 宿舍数据          | data.building.dormitories                     |
+| 线索收集进度 \| 会客室数据    | data.building.meeting.clue.board              |
+| 干员疲劳状态                  | data.building.tiredChars                      |
+| 无人机数据                    | data.building.labor                           |
+| **---游戏战绩---**            |                                               |
+| 别传插曲数据                  |                                               |
+| 剿灭作战数据                  | data.campaign                                 |
+| 保全派驻数据                  | data.tower                                    |
+| 集成战略数据                  | data.rogue                                    |
 
----基建数据---
-订单进度
-制造进度
-休息进度
-线索收集进度
-干员疲劳状态
-无人机数据
-
----游戏战绩---
-别传插曲数据
-剿灭作战数据
-保全派驻数据
-集成战略数据
-```
 在没有特殊说明的情况下，下面的情况保持默认  
 **状态码：**
 - **0：** 请求成功
@@ -693,73 +695,64 @@ Copy code
 
 (由于篇幅原因 放在[dump.json](./dump.json) 中 有需要的博士可以自行查看（悲)
 
-部分数据解读（由明日方舟工具箱开发组提供，欢迎pr更新）：
-```
-data.status.uid=用户id
-data.status.name=用户昵称
-data.status.level=用户等级
-data.status.avatar=用户头像,但是是中文key,需要app本地缓存图片对应上(可以尝试反编译解包看能不能拿到app的素材)
-data.status.registerTs=注册日期
-data.status.mainStageProgress=主线剧情(全通关是返回空,其他情况需要账号测试)
+## API数据解读
+部分数据解读，欢迎pr更新，以便完成自动化更多的可能性:p
 
+| 键                               | 描述                                                         |
+| -------------------------------- | ------------------------------------------------------------ |
+| data.status.uid                  | 用户id                                                       |
+| data.status.name                 | 用户昵称                                                     |
+| data.status.level                | 用户等级                                                     |
+| data.status.avatar               | 用户头像，但是是中文key，需要app本地缓存图片对应上           |
+| data.status.registerTs           | 注册日期                                                     |
+| data.status.mainStageProgress    | 主线剧情（全通关是返回空，其他情况需要账号测试）             |
+| data.status.secretary            | 未知！！！！！！！！！！！！！                               |
+| data.status.ap                   | 理智数据                                                     |
+|                   |                                                    |
+| data.assistChars                 | 助战数据                                                     |
+| data.assistChars.charId          | 助战人员key                                                  |
+| data.assistChars.skinId          | 皮肤key                                                      |
+| data.assistChars.evolvePhase     | 精英化等级                                                   |
+| data.assistChars.level           | 等级                                                         |
+| data.assistChars.potentialRank   | 潜力                                                         |
+| data.assistChars.skillId         | 技能key                                                      |
+| data.assistChars.mainSkillLvl    | 技能等级                                                     |
+| data.assistChars.specializeLevel | 技能专精等级                                                 |
+| data.assistChars.equip           | 模组key和等级                                                |
+|                   |                                                    |
+| data.chars                       | 所有干员数据！（等级专精获得时间等所有数据）                 |
+| data.skins                       | 所有皮肤数据！皮肤key和获得时间                              |
+|                   |                                                    |
+| data.building                    | 基建数据                                                     |
+| data.building.tiredChars         | 看起来像是疲劳到底的干员列表，未确定！！！！！！！！！！！！！ |
+| data.building.powers             | 看起来是发电站数据，但数据结构没看懂是干嘛的                 |
+| data.building.manufactures       | 制造站数据                                                   |
+| data.building.tradings           | 贸易站数据                                                   |
+| data.building.dormitories        | 宿舍数据                                                     |
+| data.building.meeting            | 会客室数据                                                   |
+| data.building.hire               | 办公室数据                                                   |
+| data.building.training           | 训练室数据                                                   |
+| data.building.labor              | 无人机数据                                                   |
+| data.building.furniture          | 家具数量                                                     |
+| data.building.elevators          | 未知！！！！ 有12条数据                                      |
+| data.building.corridors          | 未知！！！！ 有8条数据                                       |
+| data.building.control            | 控制中枢进驻信息                                             |
+|                   |                                                    |
+| data.recruit                     | 公招4个栏位的信息                                            |
+|                   |                                                    |
+| data.campaign                    | 剿灭                                                         |
+| data.campaign.records            | 剿灭各地图的key和最大击杀数（由此可推断某些图还要打）        |
+| data.campaign.reward             | 剿灭每周合成玉奖励数据：总数和已获得数                       |
+|                   |                                                    |
+| data.tower                       | 保全派驻数据，数据结构同剿灭                                 |
+|                   |                                                    |
+| data.rogue                       | 肉鸽数据                                                     |
+| data.rogue.relicCnt              | 收藏品数量                                                   |
+| data.rogue.bank                  | 前瞻性投资系统                                               |
+|                   |                                                    |
+| data.routine                     | 任务完成情况，总数和已完成数                                 |
+| data.activity                    | 看起来像是别转数据                                           |
+| data.charInfoMap                 | 根据干员key获取干员详情，但数据未看懂做什么用！！！！！！    |
+| data.skinInfoMap                 | 根据皮肤key获取皮肤详情，包含获得方式和brandId               |
+| data.activityBannerList          | 森空岛的banner，和时机活动无关，还展示的火山旅梦数据         |
 
-data.status.secretary=未知!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-data.status.ap=理智数据
-
-
-data.assistChars=助战数据
-data.assistChars.charId=助战人员key
-data.assistChars.skinId=皮肤key
-data.assistChars.evolvePhase=精英化等级
-data.assistChars.level=等级
-data.assistChars.potentialRank=潜力
-data.assistChars.skillId=技能key
-data.assistChars.mainSkillLvl=技能等级
-data.assistChars.specializeLevel=技能专精等级
-data.assistChars.equip=模组key和等级
-
-
-data.chars=所有干员数据!(等级专精获得时间等所有数据)
-
-
-data.skins=所有皮肤数据!皮肤key和获得时间
-
-
-data.building=基建数据
-data.building.tiredChars=看起来像是疲劳到底的干员列表,未确定!!!!!!!!!!!!!!!!!!!!!!!!
-data.building.powers=看起来是发电站数据,但数据结构没看懂是干嘛的
-data.building.manufactures= 制造站数据
-data.building.tradings=贸易站数据
-data.building.dormitories=宿舍数据
-data.building.meeting=会客室数据
-data.building.hire=办公室数据
-data.building.training=训练室数据
-data.building.labor=无人机数据
-data.building.furniture=家具数量
-data.building.elevators=未知!!!!!!!!有12条数据
-data.building.corridors=未知!!!!!!!!有8条数据
-data.building.control=控制中枢进驻信息
-
-data.recruit=公招4个栏位的信息
-data.campaign=剿灭
-data.campaign.records=剿灭各地图的key和最大击杀数(由此可推断某些图还要打)
-data.campaign.reward=剿灭每周合成玉奖励数据:总数和已获得数
-
-data.tower=保全派驻数据,数据结构同剿灭
-
-data.rogue=肉鸽数据
-data.rogue.relicCnt=收藏品数量
-data.rogue.bank=前瞻性投资系统
-
-data.routine=任务完成情况,总数和已完成数
-
-data.activity= 看起来像是别转数据
-
-data.charInfoMap=根据干员key获取干员详情,但数据未看懂做什么用!!!!!!!!!
-data.skinInfoMap=根据皮肤key获取皮肤详情,包含获得方式和brandId
-
-data.activityBannerList=森空岛的banner,和时机活动无关,还展示的火山旅梦数据
-
-```
